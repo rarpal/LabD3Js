@@ -19,10 +19,10 @@
   <script>
 
   var matrix = [
-  [11975,  5871, 8916, 2868],
-  [ 1951, 10048, 2060, 6171],
-  [ 8010, 16145, 8090, 8045],
-  [ 1013,   990,  940, 6907]
+  [11975,  5871, 8916, 2868], // 29630
+  [ 1951, 10048, 2060, 6171], // 20230
+  [ 8010, 16145, 8090, 8045], // 40290
+  [ 1013,   990,  940, 6907]  // 9850
   ];
 
   var chord = d3.layout.chord()
@@ -33,37 +33,48 @@
   var width = 960,
       height = 500,
       innerRadius = Math.min(width, height) * .41,
-      outerRadius = innerRadius * 1.1;
+      outerRadius = innerRadius * 1.2;
 
   var fill = d3.scale.ordinal()
       .domain(d3.range(4))
       .range(["#000000", "#FFDD89", "#957244", "#F26223"]);
 
+  var grouptext = d3.scale.ordinal()
+      .domain(d3.range(4))
+      .range(["Black", "Ginger", "Blonde", "Red"]);
+
   var svg = d3.select("body").append("svg")
       .attr("width", width)
       .attr("height", height)
-    .append("g")
+      .append("g")
       .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
+
+  console.log(svg.selectAll("g"));
 
   svg.append("g").selectAll("path")
       .data(chord.groups)
-    .enter().append("path")
-      .style("fill", function(d) { return fill(d.index); })
-      .style("stroke", function(d) { return fill(d.index); })
-      .attr("d", d3.svg.arc().innerRadius(innerRadius).outerRadius(outerRadius))
-      .on("mouseover", fade(.1))
-      .on("mouseout", fade(1));
+      .enter()
+        .append("path")
+        .style("fill", function(d) { return fill(d.index); })
+        .style("stroke", function(d) { return fill(d.index); })
+        .attr("d", d3.svg.arc().innerRadius(innerRadius).outerRadius(outerRadius))
+        .on("mouseover", fade(.1))
+        .on("mouseout", fade(1));
+
+  console.log(svg.selectAll("g"));
 
   var ticks = svg.append("g").selectAll("g")
       .data(chord.groups)
-    .enter().append("g").selectAll("g")
-      .data(groupTicks)
-    .enter().append("g")
-      .attr("transform", function(d) {
-        return "rotate(" + (d.angle * 180 / Math.PI - 90) + ")"
-            + "translate(" + outerRadius + ",0)";
-      });
+      .enter()
+        .append("g").selectAll("g")
+        .data(groupTicks)
+        .enter()
+          .append("g")
+          .attr("transform", function(d) { return "rotate(" + (d.angle * 180 / Math.PI - 90) + ")" + "translate(" + outerRadius + ",0)"; });
 
+  console.log(svg.selectAll("g"));
+
+/*
   ticks.append("line")
       .attr("x1", 1)
       .attr("y1", 0)
@@ -86,7 +97,7 @@
       .attr("d", d3.svg.chord().radius(innerRadius))
       .style("fill", function(d) { return fill(d.target.index); })
       .style("opacity", 1);
-
+*/
       // Returns an array of tick angles and labels, given a group.
       function groupTicks(d) {
         var k = (d.endAngle - d.startAngle) / d.value;
