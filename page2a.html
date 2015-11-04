@@ -19,14 +19,26 @@
   <script>
 
   // Setup data
-  var matrix = [
+  /*var matrix = [
   [11975,  5871, 8916, 2868], // 29630
   [ 1951, 10048, 2060, 6171], // 20230
   [ 8010, 16145, 8090, 8045], // 40290
   [ 1013,   990,  940, 6907]  // 9850
+  ];*/
+
+  var matrix = [
+    [500, 150, 50],
+    [30, 200, 25],
+    [20, 30, 150]
   ];
 
-  var datatext = ["Black", "Ginger", "Blonde", "Red"];
+  /*var matrix = [
+    [500, 30, 20],
+    [150, 200, 30],
+    [50, 25, 150]
+  ];*/
+
+  var datatext = ["Healthy", "Moderate", "High"];
 
   var chord = d3.layout.chord()
     .padding(.05)
@@ -40,7 +52,8 @@
 
   var fill = d3.scale.ordinal()
       .domain(d3.range(4))
-      .range(["#000000", "#FFDD89", "#957244", "#F26223"]);
+      //.range(["#000000", "#FFDD89", "#957244", "#F26223"]);
+      .range(["#000000", "#FFDD89", "#957244"]);
 
   var svg = d3.select("body").append("svg")
       .attr("width", width)
@@ -52,12 +65,10 @@
       .innerRadius(innerRadius)
       .outerRadius(outerRadius);
 
-  console.log(svg.selectAll("g"));
   var chordGroup = svg.selectAll("g")
       .data(chord.groups)
       .enter()
         .append("g");
-  console.log(chordGroup.selectAll(".group"));
 
   chordGroup.append("path")
       .style("fill", function(d) { return fill(d.index); })
@@ -126,12 +137,14 @@
   function groupTicks(d) {
       var k = (d.endAngle - d.startAngle) / d.value;
       //var k = (d.endAngle - d.startAngle) / 2;
-      return d3.range(0, d.value, 1000).map(function(v, i) {
+      //console.log(d.value);
+      return d3.range(0, d.value, 10).map(function(v, i) {
       //return d3.range(0, 1, 1).map(function(v, i) {
         return {
           angle: v * k + d.startAngle,
           //angle: d.endAngle,
-          label: i % 5 ? null : v / 1000 + "k"
+          //label: i % 5 ? null : v / 1000 + "k"
+          label: i % 2 ? null : v
           //grouplable: i % 1000 ? null : datatext[d.index]
         };
       });
