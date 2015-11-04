@@ -53,7 +53,7 @@
   var fill = d3.scale.ordinal()
       .domain(d3.range(4))
       //.range(["#000000", "#FFDD89", "#957244", "#F26223"]);
-      .range(["#000000", "#FFDD89", "#957244"]);
+      .range(["green", "orange", "red"]);
 
   var svg = d3.select("body").append("svg")
       .attr("width", width)
@@ -95,16 +95,16 @@
       .attr("y1", 0)
       .attr("x2", 5)
       .attr("y2", 0)
-      .style("stroke", "#000")
-      .style("fill", "Blue");
+      .style("stroke", "#000");
+      //.style("fill", "Blue");
 
   ticks.append("text")
       .attr("x", 8)
       .attr("dy", ".35em")
       .attr("transform", function(d) { return d.angle > Math.PI ? "rotate(180) translate(-16)" : null; })
       .style("text-anchor", function(d) { return d.angle > Math.PI ? "end" : null; })
-      .style("fill", "Blue")
-      .text(function(d) { return d.label; })
+      //.style("fill", "Blue")
+      .text(function(d) { return d.label; });
       //.text(function(d) { return d.grouplable; });
 
   // Add a text label.
@@ -115,7 +115,7 @@
       //.attr("dy", ".35em")
       //.attr("transform", function(d) { return d.angle > Math.PI ? "rotate(180) translate(16)" : null; })
       //.style("text-anchor", function(d) { return d.angle > Math.PI ? "end" : null; })
-      .style("fill", "Blue")
+      //.style("fill", "Blue")
       .text(function(d) { return d.label; });
 
   groupText.append("textPath")
