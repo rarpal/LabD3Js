@@ -5,58 +5,19 @@
 </head>
 <body>
 
-  <svg xmlns="http://www.w3.org/2000/svg" width="500px" height="500px">
-    <text x="10"  y="20" transform="rotate(30 20,40)">
-        SVG Text Rotation example
-    </text>
-  </svg>
+  <svg xmlns="http://www.w3.org/2000/svg"
+     width="500px" height="300px" viewBox="0 0 1000 300">
 
-  <script>
+  <text x="250" y="150"
+        font-family="Verdana"
+        font-size="55">
+    Hello, out there
+  </text>
 
-  var data = [10, 50, 80];
-  var r = 300;
+  <!-- Show outline of canvas using 'rect' element -->
+  <rect x="1" y="1" width="998" height="298"
+        fill="none" stroke-width="2" />
+</svg>
 
-  var color = d3.scale.ordinal()
-    .range(["red", "blue", "orange"]);
-
-  var canvas = d3.select("body").append("svg")
-      .attr("width", 1500)
-      .attr("height", 1500);
-
-  var group = canvas.append("g")
-      .attr("transform", "translate(300, 300)");
-
-  var p = Math.PI * 2;
-
-  var arc = d3.svg.arc()
-      .innerRadius(200)
-      .outerRadius(r);
-
-  var pie = d3.layout.pie(data);
-      //.value(function (d) { return d;});
-
-  var arcs = group.selectAll("arc")
-      //.data(pie(data))
-      .data(pie)
-      .enter()
-        .append("path")
-        .attr("d", arc)
-        .attr("fill", function (d) { return color(d.data); });
-      //.append("g");
-      //.attr("class", "arc");
-
-  /*var rect = group.selectAll("rect")
-      .data(data)
-      .enter()
-        .append("rect")
-        .attr("width", 50)
-        .attr("height", 50)
-        .style("color", "blue");*/
-
-  /*arcs.append("path")
-      .attr("d", arc)
-      .attr("fill", function (d) { return color(d.data); });*/
-
-  </script>
 </body>
 </html>

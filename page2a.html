@@ -80,7 +80,7 @@
      [0,        0,          0,     1,      22,    23]      // Very high
   ];*/
 
-  var datatext = ["Non-users", "Healthy", "Low", "Moderate", "High", "Very high"];
+  var groupLables = ["Non-users", "Healthy", "Low", "Moderate", "High", "Very high"];
 
   var chord = d3.layout.chord()
     .padding(.05)
@@ -89,7 +89,7 @@
 
   var width = 960,
       height = 500,
-      innerRadius = Math.min(width, height) * .41,
+      innerRadius = Math.min(width, height) * .31,
       outerRadius = innerRadius * 1.1;
 
   var fill = d3.scale.ordinal()
@@ -113,16 +113,13 @@
 
   chordGroup.append("path")
       .style("fill", function(d) { return fill(d.index); })
-      .style("stroke", function(d) { return fill(d.index); })
+      //.style("stroke", function(d) { return fill(d.index); })
+      .style("stroke", "black")
       .attr("id", function(d, i) {return "group" + i ;})
       .attr("d", arc)
       .on("mouseover", fade(.1))
       .on("mouseout", fade(1));
 
-  //var ticks = svg.append("g").selectAll(".group")
-  //    .data(chord.groups)
-  //    .enter()
-  //      .append("g").selectAll(".group")
   var ticks = chordGroup.selectAll(".group")
       .data(groupTicks)
       .enter()
@@ -144,9 +141,8 @@
       .attr("dy", ".35em")
       .attr("transform", function(d) { return d.angle > Math.PI ? "rotate(180) translate(-16)" : null; })
       .attr("text-anchor", function(d) { return d.angle > Math.PI ? "end" : null; })
-      //.style("fill", "Blue")
+      .style("font-size", 8)
       .text(function(d) { return d.label; });
-      //.text(function(d) { return d.grouplable; });
 
   /*
   // Add a text label.
@@ -168,15 +164,14 @@
   chordGroup.append("text")
       .each(function(d) { d.angle = (d.startAngle + d.endAngle) / 2; })
       .attr("dy", ".35em")
-      .attr("class", "titles")
       .attr("transform", function(d) {
     		  return "rotate(" + (d.angle * 180 / Math.PI - 90) + ")"
-    		    + "translate(" + (innerRadius + 55) + ")"
-    		    + (d.angle > Math.PI ? "rotate(180)" : "");
-        } )
+    		    + "translate(" + (innerRadius + 50) + ")" + (d.angle > Math.PI ? "rotate(180)" : "");
+          } )
       .attr("text-anchor", function(d) { return d.angle > Math.PI ? "end" : null; })
       //.attr('opacity', 0)
-      .text(function(d,i) { return datatext[i]; });
+      .style("font-size", 10)
+      .text(function(d,i) { return groupLables[i]; });
 
   // Add the chords
   svg.append("g")
