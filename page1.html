@@ -6,19 +6,20 @@
 <body>
 <script>
 body = d3.select('body')
+
 svg = body.append('svg')
     .attr('width', 300)
     .attr('height', 200)
+
 grp = svg.append("g")
     .style('fill', 'grey')
 
-rect = grp.append('rect').transition().duration(500)
+grp.append('rect').transition().duration(500)
     .attr('width', 250)
     .attr('height', 150)
     .attr('x', 25).attr('y', 25)
     .attr("rx", 10).attr("ry", 10)
-    .
-text = grp.append('text').text('This is some information')
+grp.append('text').text('This is some information')
     .attr('x', 30).attr('y', 100)
     .style('fill', 'white')
 </script>
