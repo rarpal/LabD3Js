@@ -38,6 +38,7 @@
     {"RUB":"Very High","INRUB0":44,"OUTRUB0":0,"INRUB1":266,"OUTRUB1":-2,"INRUB2":268,"OUTRUB2":-1,"INRUB3":1011,"OUTRUB3":-10,"INRUB4":945,"OUTRUB4":-148,"INRUB5":161,"OUTRUB5":0}
   ];
 
+  // The above sample data set is transformed into a matrix
   var matrix = new Array(6);
   var rubgrp = new Array(6);
 
@@ -77,6 +78,7 @@
   };
   matrix[5] = rubgrp;
 
+  // Example matrix (not the above dataset)
   /*var matrix = [
   // <--------------------  Past  -------------------------->
   // Non-users  Healthy  Low    Moderate  High  Very high     Present
@@ -164,6 +166,7 @@
       .style("font-size", 8)
       .text(function(d) { return d.label; });
 
+  // The following is an alternative way of displaying lables along the arcs of the circle
   /*
   // Add a text path label.
   var groupText = chordGroup.append("text")
@@ -213,21 +216,13 @@
         .on("mouseout.one", chordFade(1))
         .on("mouseout.two", chordDeselect());
 
-  //var d = GetData("CCG", "08T");
-
   // Returns an array of tick angles and labels, given a group.
   function groupTicks(d) {
       var k = (d.endAngle - d.startAngle) / d.value;
-      //var k = (d.endAngle - d.startAngle) / 2;
-      //console.log(d.value);
       return d3.range(0, d.value, 1000).map(function(v, i) {
-      //return d3.range(0, 1, 1).map(function(v, i) {
         return {
           angle: v * k + d.startAngle,
-          //angle: d.endAngle,
           label: i % 2 ? null : v /// 1000 + "k"
-          //label: i % 10 ? null : v
-          //grouplable: i % 1000 ? null : datatext[d.index]
         };
       });
     }
@@ -239,7 +234,6 @@
           .filter(function(d) {
               return d.source.index != i && d.target.index != i;
             })
-          //.transition()
           .style("opacity", opacity);
       };
   }
@@ -290,22 +284,6 @@
     return function(c, i) {
       d3.select("#tt").remove();
     };
-  }
-
-  function GetData(userlevel, orgcode)
-  {
-      var aj = $.ajax({
-          type: "POST",
-          dataType: "json",
-          url: "http://sppatientsdev/sollisacg/bireporting/GetData.asmx/GetRubHopperData",
-          data: "{'userlevel':'" + userlevel + "','orgcode':'" + orgcode + "'}",
-          contentType: "application/json; charset=utf-8"
-      });
-      aj.fail(function (jqXHR, textStatus, errorThrown) {
-          alert("Problem getting data: " + textStatus + " " + errorThrown);
-
-      });
-      return aj;
   }
 
   </script>
