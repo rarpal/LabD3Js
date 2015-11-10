@@ -23,11 +23,11 @@
     stroke-width: .5px;
   }
 </style>
+<script src="./scripts/d3.min.js"></script>
+<script src="./scripts/jQuery/jquery-1.10.2.min.js"></script>
+<!--<script src="//d3js.org/d3.v3.min.js" charset="utf-8"></script>-->
 </head>
 <body>
-  <script src="./scripts/d3.min.js"></script>
-  <script src="./scripts/jQuery/jquery-1.10.2.min.js"></script>
-
   <script>
 
   // Setup data
@@ -80,16 +80,16 @@
   };
   matrix[5] = rubgrp;
 
-  // Example matrix (not the above dataset)
+  // Matrix created from the above dataset
   /*var matrix = [
-  // <--------------------  Past  -------------------------->
-  // Non-users  Healthy  Low    Moderate  High  Very high     Present
-     [10464,    5890,     846,  3010,     548,   170],     // Non-users
-     [78,       3056,     544,  1910,     394,   130],     // Healthy
-     [0,        0,       2301,  1538,     578,   185],     // Low
-     [0,        1,         51,  1100,     825,   223],     // Moderate
-     [0,        0,          0,     8,     246,   238],     // High
-     [0,        0,          0,     1,      22,    23]      // Very high
+  //	<---------------------Past------------------------>
+  //	Non-users	Healthy	Low		Moderate	High	Very high	    Present
+    	[488,		  14,		  97,		225,		 108,	  44]			   // Non-users
+    	[240,		  2984,	  514,	1373,		 591,	  266]		   // Healthy
+    	[4,			  53,		  1861,	833,		 703,	  268]		   // Low
+    	[16,		  143,	  196,	2999,		 1633,	1011]		   // Moderate
+    	[3,			  9,		  8,		77,			 1042,	945]		   // High
+    	[0,			  2,		  1,		10,			 148,	  161]		   // Very high
   ];*/
 
   // The lables for the chord groups
@@ -115,6 +115,20 @@
       // Append a group and move it to the center of the viewport
       .append("g")
       .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
+
+  // Create group for user instructions
+  var ig = d3.select("svg").append("g")
+    .attr("transform", function() { return "translate(20,500)"; })
+  ig.append("rect")
+    .attr("width", 200).attr("height", 50)
+    .attr("rx", 10).attr("ry", 10)
+    .attr("class", "tooltip-rect");
+  ig.append("text").attr("x", 10).attr("y", 5)
+    .attr("class", "tooltip-text")
+    .append("tspan").attr("x", 10).attr("dy", 15)
+      .text("-> Mouseover the arcs for group totals")
+    .append("tspan").attr("x", 10).attr("dy", 15)
+      .text("-> Mouseover the chords for values");
 
   // Setup the arc path generator with the predetermined radius values
   var arc = d3.svg.arc()
@@ -220,10 +234,10 @@
   // Returns an array of tick angles and labels, given a group.
   function groupTicks(d) {
       var k = (d.endAngle - d.startAngle) / d.value;
-      return d3.range(0, d.value, 1000).map(function(v, i) {
+      return d3.range(0, d.value, 100).map(function(v, i) {
         return {
           angle: v * k + d.startAngle,
-          label: i % 2 ? null : v /// 1000 + "k"
+          label: i % 5 ? null : v
         };
       });
     }
@@ -243,7 +257,7 @@
     return function(g, i) {
       var tg = d3.select("svg").append("g")
         .attr("id", "tt")
-        .attr("transform", function() { return "translate(50,40)"; })
+        .attr("transform", function() { return "translate(750,40)"; })
 
       tg.append("rect")
         .attr("width", 200).attr("height", 80)
@@ -276,7 +290,7 @@
     return function(c, i) {
       var tg = d3.select("svg").append("g")
         .attr("id", "tt")
-        .attr("transform", function() { return "translate(50,40)"; })
+        .attr("transform", function() { return "translate(750,40)"; })
 
       tg.append("rect")
         .attr("width", 200).attr("height", 80)
@@ -298,6 +312,5 @@
   }
 
   </script>
-
 </body>
 </html>
